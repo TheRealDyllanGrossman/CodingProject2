@@ -1,11 +1,3 @@
-//
-// (C) 2022, E. Wes Bethel
-// benchmark-* harness for running different versions of the sum study
-//    over different problem sizes
-//
-// usage: no command line arguments
-// set problem sizes, block sizes in the code below
-
 #include <algorithm>
 #include <chrono>
 #include <iomanip>
@@ -26,6 +18,7 @@ int main(int argc, char** argv)
     int64_t t;
     std::vector<int> sum_calls(problem_sizes.size(), 0);
     double min_duration = 30.0;
+    int total_counter = 0; // Add the total counter here
 
     for (size_t i = 0; i < problem_sizes.size(); ++i)
     {
@@ -40,6 +33,7 @@ int main(int argc, char** argv)
         {
             t = sum(n, &A[0]);
             sum_calls[i]++;
+            total_counter++; // Increment the total counter here
 
             auto end_time = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
@@ -54,6 +48,8 @@ int main(int argc, char** argv)
     {
         printf("Problem size N=%d was executed %d times\n", problem_sizes[i], sum_calls[i]);
     }
+
+    printf("Total executions: %d\n", total_counter); // Print the total counter here
 
     return 0;
 }
